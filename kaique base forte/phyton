@@ -1,0 +1,63 @@
+# estoque_simples.py
+
+estoque = {}
+
+def cadastrar_produto():
+    nome = input("Nome do produto: ")
+    if nome in estoque:
+        print("Produto já cadastrado.")
+        return
+    preco = float(input("Preço unitário (R$): "))
+    quantidade = int(input("Quantidade total em estoque: "))
+    reservados = int(input("Quantidade reservada: "))
+    estoque[nome] = {
+        "preco": preco,
+        "quantidade": quantidade,
+        "reservados": reservados
+    }
+    print("Produto cadastrado com sucesso.")
+
+def listar_estoque():
+    if not estoque:
+        print("Estoque vazio.")
+        return
+    print("\n--- Produtos em Estoque ---")
+    for nome, dados in estoque.items():
+        disponivel = dados["quantidade"] - dados["reservados"]
+        print(f"{nome} | Preço: R$ {dados['preco']:.2f} | Total: {dados['quantidade']} | Reservados: {dados['reservados']} | Disponível: {disponivel}")
+
+def atualizar_reserva():
+    nome = input("Nome do produto: ")
+    if nome not in estoque:
+        print("Produto não encontrado.")
+        return
+    nova_reserva = int(input("Nova quantidade reservada: "))
+    if nova_reserva > estoque[nome]["quantidade"]:
+        print("Erro: reserva maior que o estoque total.")
+        return
+    estoque[nome]["reservados"] = nova_reserva
+    print("Reserva atualizada.")
+
+def menu():
+    while True:
+        print("\n--- Menu Estoque ---")
+        print("1. Cadastrar produto")
+        print("2. Listar estoque")
+        print("3. Atualizar reserva")
+        print("4. Sair")
+        opcao = input("Escolha uma opção: ")
+
+        if opcao == "1":
+            cadastrar_produto()
+        elif opcao == "2":
+            listar_estoque()
+        elif opcao == "3":
+            atualizar_reserva()
+        elif opcao == "4":
+            print("Encerrando sistema...")
+            break
+        else:
+            print("Opção inválida.")
+
+if __name__ == "__main__":
+    menu()
