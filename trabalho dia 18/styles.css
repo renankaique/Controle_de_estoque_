@@ -1,0 +1,37 @@
+:root{
+  --bg: #0f172a;
+  --card: linear-gradient(135deg,#0ea5a4 0%, #7c3aed 100%);
+  --accent: #f97316;
+  --muted: #94a3b8;
+  --glass: rgba(255,255,255,0.06);
+}
+
+*{box-sizing:border-box;font-family:Inter, system-ui, Arial, sans-serif}
+html,body{height:100%;margin:0;background:radial-gradient(circle at 10% 10%, #06172b 0%, #081129 40%, #061124 100%);color:#e6eef8}
+
+.topbar{padding:18px 24px;background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.03)}
+.topbar h1{margin:0;font-size:20px}
+
+.container{display:flex;gap:20px;padding:24px;flex-wrap:wrap}
+.card{background:var(--glass);border-radius:12px;padding:16px;flex:1;min-width:320px;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
+.form-card{max-width:420px}
+.table-card{flex:2;min-width:480px}
+
+label{display:block;margin-bottom:10px}
+input[type=text],input[type=number],textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit}
+
+.actions{display:flex;gap:10px;margin-top:12px}
+button{padding:10px 14px;border-radius:10px;border:none;cursor:pointer;background:var(--accent);color:#07112a;font-weight:600}
+button.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+
+table{width:100%;border-collapse:collapse;margin-top:10px}
+th,td{padding:10px;text-align:left;border-bottom:1px dashed rgba(255,255,255,0.03)}
+th{font-size:13px;color:var(--muted)}
+
+.btn-edit, .btn-delete{padding:6px 8px;border-radius:8px;border:none;cursor:pointer}
+.btn-edit{background:#22c55e;color:#042013}
+.btn-delete{background:#ef4444;color:#2b0a0a}
+
+.footer{text-align:center;padding:14px 8px;color:var(--muted);font-size:13px}
+
+@media(max-width:800px){.container{flex-direction:column}.table-card{order:2}}

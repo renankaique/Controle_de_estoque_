@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sistema de Estoque - Simples</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Sistema de Estoque</h1>
+  </header>
+
+  <main class="container">
+    <section class="card form-card">
+      <h2>Adicionar / Editar Produto</h2>
+      <form id="product-form">
+        <input type="hidden" id="product-id">
+        <label>Nome
+          <input type="text" id="name" required>
+        </label>
+        <label>Quantidade
+          <input type="number" id="quantity" min="0" required>
+        </label>
+        <label>Preço (use vírgula: 199,99)
+          <input type="text" id="price" pattern="^[0-9]+([,\.][0-9]{1,2})?$" required>
+        </label>
+        <div class="actions">
+          <button type="submit" id="save-btn">Salvar</button>
+          <button type="button" id="cancel-btn" class="secondary">Cancelar</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card table-card">
+      <h2>Produtos</h2>
+      <table id="products-table">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Quantidade</th>
+            <th>Preço (R$)</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer class="footer">Feito por renan</footer>
+
+  <script>
+    const API = "http://localhost:8000/api/products";
+
+    async function loadProducts() {
+      const res = await fetch(API);
+      const data = await res.json();
+      const tbody = document.querySelector("#products-table tbody");
+      tbody.innerHTML = "";
+
+      data.forEach(prod => {
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+          <td>${prod.id}</td>
+          <td>${prod.name}</td>
+          <td>${prod.quantity}</td>
+          <td>${prod.price.toFixed(2)}</td>
+          <td>
+            <button class="edit-btn" onclick="editProduct(${prod.id})">Editar</button>
+            <button class="delete-btn" style="background: green; color: white;" onclick="deleteProduct(${prod.id})">Excluir</button>
+          </td>
+        `;
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function deleteProduct(id) {
+      if (!confirm("Deseja realmente excluir?")) return;
+
+      await fetch(`${API}/${id}`, { method: "DELETE" });
+      loadProducts();
+    }
+
+    function editProduct(id) {
+      fetch(`${API}/${id}`)
+        .then(res => res.json())
+        .then(prod => {
+          document.getElementById("product-id").value = prod.id;
+          document.getElementById("name").value = prod.name;
+          document.getElementById("quantity").value = prod.quantity;
+          document.getElementById("price").value = prod.price.toString().replace(".", ",");
+        });
+    }
+
+    document.getElementById("product-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const id = document.getElementById("product-id").value;
+      const name = document.getElementById("name").value;
+      const quantity = document.getElementById("quantity").value;
+      const price = document.getElementById("price").value;
+
+      const data = { name, quantity, price };
+
+      if (id) {
+        await fetch(`${API}/${id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+      } else {
+        await fetch(API, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+      }
+
+      document.getElementById("product-form").reset();
+      document.getElementById("product-id").value = "";
+      loadProducts();
+    });
+
+    document.getElementById("cancel-btn").onclick = () => {
+      document.getElementById("product-id").value = "";
+      document.getElementById("product-form").reset();
+    };
+
+    loadProducts();
+  </script>
+
+</body>
+</html>
