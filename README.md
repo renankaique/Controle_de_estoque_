@@ -35,4 +35,5 @@ Flask é um framework simples feito para criar sites usando Python. Ele conecta 
 SQLite é o banco de dados do sistema. Ele guarda todos os produtos cadastrados, suas quantidades e preços de forma permanente. Funciona como uma “caixa” onde todas as informações ficam salvas.
 
 ---
+<img width="1264" height="625" alt="image" src="https://github.com/user-attachments/assets/19e1a35f-0372-4d9e-a6da-182bd602b802" />
 
