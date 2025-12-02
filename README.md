@@ -1,5 +1,3 @@
 # Controle_de_estoque_
 
-Claro! Aqui está uma **versão resumida**, em texto corrido e sem tópicos:
-
 Este projeto é um sistema simples criado para registrar produtos, controlar quantidades disponíveis e identificar itens que estão em falta no estoque. Ele permite cadastrar, editar e excluir produtos, além de visualizar facilmente o que precisa ser reposto. O sistema foi desenvolvido usando HTML e CSS no front-end para montar a interface e deixá-la organizada e intuitiva, enquanto o back-end foi feito em Python com Flask, responsável por receber os dados, validar informações, salvar no banco e retornar os resultados para o usuário. Todas as informações são armazenadas em um banco de dados SQLite, que guarda produtos, quantidades e preços de forma permanente. O objetivo é oferecer uma ferramenta prática e direta para auxiliar no controle básico de estoque.
